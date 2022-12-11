@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const sdk_1 = require("@directus/sdk");
 const safe_run_middleware_1 = __importDefault(require("safe-run-middleware"));
-class DirectusTransportSafeRunMiddleware {
+class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
     constructor(app) {
-        this.request = (method, path, options, data) => __awaiter(this, void 0, void 0, function* () {
+        super({ url: '' });
+        this.request = (method, path, data, options) => __awaiter(this, void 0, void 0, function* () {
             var _a;
             let response = yield this.app.runMiddleware(path, {
                 method,
@@ -30,13 +32,6 @@ class DirectusTransportSafeRunMiddleware {
                 status: response.statusCode
             };
         });
-        this.get = (path, options) => this.request('get', path, options);
-        this.head = (path, options) => this.request('head', path, options);
-        this.options = (path, options) => this.request('options', path, options);
-        this.delete = (path, data, options) => this.request('delete', path, options, data);
-        this.post = (path, data, options) => this.request('post', path, options, data);
-        this.put = (path, data, options) => this.request('put', path, options, data);
-        this.patch = (path, data, options) => this.request('patch', path, options, data);
         this.app = (0, safe_run_middleware_1.default)(app);
     }
 }

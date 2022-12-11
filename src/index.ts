@@ -1,12 +1,13 @@
 import{
-	ITransport,
-	TransportRequestOptions,
+	Transport,
+	TransportMethods,
+	TransportOptions,
 	TransportResponse
 }from '@directus/sdk';
 import {Express} from 'express';
 import safeRunMiddleware from 'safe-run-middleware';
 
-export default class DirectusTransportSafeRunMiddleware implements ITransport{
+export default class DirectusTransportSafeRunMiddleware extends Transport{
 	protected app:{
 		runMiddleware(
 			path:string,
@@ -23,18 +24,18 @@ export default class DirectusTransportSafeRunMiddleware implements ITransport{
 	};
 
 	constructor(app:Express){
+		super({url:''});
 		this.app=safeRunMiddleware(app);
 	}
 
 	protected readonly request=async<
 		T=any,
-		P=any,
 		R=any
 	>(
-		method:string,
+		method:TransportMethods,
 		path:string,
-		options?:TransportRequestOptions,
-		data?:P
+		data?:Record<string,any>,
+		options?:Omit<TransportOptions,'url'>
 	):Promise<TransportResponse<T,R>>=>{
 		let response=await this.app.runMiddleware(path,{
 			method,
@@ -49,68 +50,4 @@ export default class DirectusTransportSafeRunMiddleware implements ITransport{
 			status:response.statusCode
 		};
 	}
-
-	readonly get=<
-		T=any,
-		R=any
-	>(
-		path:string,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('get',path,options);
-	
-	readonly head=<
-		T=any,
-		R=any
-	>(
-		path:string,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('head',path,options);
-	
-	readonly options=<
-		T=any,
-		R=any
-	>(
-		path:string,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('options',path,options);
-	
-	readonly delete=<
-		T=any,
-		P=any,
-		R=any
-	>(
-		path:string,
-		data?:P,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('delete',path,options,data);
-	
-	readonly post=<
-		T=any,
-		P=any,
-		R=any
-	>(
-		path:string,
-		data?:P,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('post',path,options,data);
-	
-	readonly put=<
-		T=any,
-		P=any,
-		R=any
-	>(
-		path:string,
-		data?:P,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('put',path,options,data);
-	
-	readonly patch=<
-		T=any,
-		P=any,
-		R=any
-	>(
-		path:string,
-		data?:P,
-		options?:TransportRequestOptions
-	):Promise<TransportResponse<T,R>>=>this.request('patch',path,options,data);
 }

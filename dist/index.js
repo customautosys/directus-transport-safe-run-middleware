@@ -14,12 +14,18 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
     request(method, path, data, options) {
         let params = {
             method,
-            body: data
+            body: data,
+            headers: {
+                remoteAddress: '127.0.0.1',
+                origin: '127.0.0.1',
+                'content-type': 'application/json',
+                'transfer-encoding': 'identity'
+            }
         };
         if (options.params)
             params.query = options.params;
         if (options.headers)
-            params.headers = options.headers;
+            Object.assign(params.headers, options.headers);
         return new Promise(resolve => this.app.runMiddleware(this.url + path, params, (status, data, headers) => {
             console.log(status, data, headers);
             resolve({

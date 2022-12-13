@@ -14,6 +14,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
     }
     request(method, path, data, options) {
         let params = {
+            ip: '127.0.0.1',
             method,
             body: data,
             headers: {

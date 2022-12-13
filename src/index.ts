@@ -26,6 +26,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		options?:Omit<TransportOptions,'url'>
 	):Promise<TransportResponse<T,R>>{
 		let params:any={
+			ip:'127.0.0.1',
 			method,
 			body:data,
 			headers:{

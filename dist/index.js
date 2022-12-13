@@ -30,7 +30,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
             params.query = options.params;
         if (options.headers)
             Object.assign(params.headers, options.headers);
-        return new Promise(resolve => this.res.runMiddleware(this.url + path, params, (status, data, headers) => {
+        return new Promise(resolve => this.res.app.runMiddleware(this.url + path, params, (status, data, headers) => {
             console.log(status, data, headers);
             resolve({
                 headers,

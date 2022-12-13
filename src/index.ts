@@ -40,7 +40,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		};
 		if(options.params)params.query=options.params;
 		if(options.headers)Object.assign(params.headers,options.headers);
-		return new Promise(resolve=>(this.res as any).runMiddleware(this.url+path,params,(status,data,headers)=>{
+		return new Promise(resolve=>(this.res.app as any).runMiddleware(this.url+path,params,(status,data,headers)=>{
 			console.log(status,data,headers);
 			resolve({
 				headers,

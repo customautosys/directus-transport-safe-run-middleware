@@ -14,6 +14,6 @@ export default class DirectusTransportSafeRunMiddleware extends Transport {
             headers: any;
         }>;
     };
-    constructor(app: Express);
+    constructor(url: string, app: Express);
     protected request<T = any, R = any>(method: TransportMethods, path: string, data?: Record<string, any>, options?: Omit<TransportOptions, 'url'>): Promise<TransportResponse<T, R>>;
 }

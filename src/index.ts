@@ -23,8 +23,8 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		}>
 	};
 
-	constructor(app:Express){
-		super({url:''});
+	constructor(url:string,app:Express){
+		super({url});
 		this.app=safeRunMiddleware(app);
 	}
 

@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sdk_1 = require("@directus/sdk");
 const safe_run_middleware_1 = __importDefault(require("safe-run-middleware"));
 class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
-    constructor(app) {
-        super({ url: '' });
+    constructor(url, app) {
+        super({ url });
         this.app = (0, safe_run_middleware_1.default)(app);
     }
     request(method, path, data, options) {

@@ -28,7 +28,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		this.app=safeRunMiddleware(app);
 	}
 
-	protected readonly request=async<
+	protected async request<
 		T=any,
 		R=any
 	>(
@@ -36,7 +36,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		path:string,
 		data?:Record<string,any>,
 		options?:Omit<TransportOptions,'url'>
-	):Promise<TransportResponse<T,R>>=>{
+	):Promise<TransportResponse<T,R>>{
 		let response=await this.app.runMiddleware(path,{
 			method,
 			query:options.params,

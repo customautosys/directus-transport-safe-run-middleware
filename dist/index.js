@@ -17,8 +17,11 @@ const safe_run_middleware_1 = __importDefault(require("safe-run-middleware"));
 class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
     constructor(app) {
         super({ url: '' });
-        this.request = (method, path, data, options) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+        this.app = (0, safe_run_middleware_1.default)(app);
+    }
+    request(method, path, data, options) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.app.runMiddleware(path, {
                 method,
                 query: options.params,
@@ -32,7 +35,6 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 status: response.statusCode
             };
         });
-        this.app = (0, safe_run_middleware_1.default)(app);
     }
 }
 exports.default = DirectusTransportSafeRunMiddleware;

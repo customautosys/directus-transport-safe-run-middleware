@@ -15,5 +15,5 @@ export default class DirectusTransportSafeRunMiddleware extends Transport {
         }>;
     };
     constructor(app: Express);
-    protected readonly request: <T = any, R = any>(method: TransportMethods, path: string, data?: Record<string, any>, options?: Omit<TransportOptions, 'url'>) => Promise<TransportResponse<T, R>>;
+    protected request<T = any, R = any>(method: TransportMethods, path: string, data?: Record<string, any>, options?: Omit<TransportOptions, 'url'>): Promise<TransportResponse<T, R>>;
 }

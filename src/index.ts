@@ -4,7 +4,7 @@ import{
 	TransportOptions,
 	TransportResponse
 }from '@directus/sdk';
-import {Express} from 'express';
+import type {Express} from 'express';
 import safeRunMiddleware from 'safe-run-middleware';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{

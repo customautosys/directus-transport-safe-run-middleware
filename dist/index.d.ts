@@ -1,5 +1,5 @@
 import { Transport, TransportMethods, TransportOptions, TransportResponse } from '@directus/sdk';
-import { Express } from 'express';
+import type { Express } from 'express';
 export default class DirectusTransportSafeRunMiddleware extends Transport {
     protected app: {
         runMiddleware(path: string, payload?: {

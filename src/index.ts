@@ -22,12 +22,13 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		data?:Record<string,any>,
 		options?:Omit<TransportOptions,'url'>
 	):Promise<TransportResponse<T,R>>{
-		return new Promise(resolve=>(this.app as any).runMiddleware(this.url+path,{
+		let params:any={
 			method,
-			query:options.params,
-			body:data,
-			headers:options.headers
-		},(status,data,headers)=>{
+			body:data
+		};
+		if(options.params)params.query=options.params;
+		if(options.headers)params.headers=options.headers;
+		return new Promise(resolve=>(this.app as any).runMiddleware(this.url+path,params,(status,data,headers)=>{
 			console.log(status,data,headers);
 			resolve({
 				headers,

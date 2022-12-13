@@ -17,12 +17,15 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
             query: options.params,
             body: data,
             headers: options.headers
-        }, (status, data, headers) => resolve({
-            headers,
-            raw: data,
-            data: data === null || data === void 0 ? void 0 : data.data,
-            status
-        })));
+        }, (status, data, headers) => {
+            console.log(status, data, headers);
+            resolve({
+                headers,
+                raw: data,
+                data: data === null || data === void 0 ? void 0 : data.data,
+                status
+            });
+        }));
     }
 }
 exports.default = DirectusTransportSafeRunMiddleware;

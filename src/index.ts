@@ -27,11 +27,14 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 			query:options.params,
 			body:data,
 			headers:options.headers
-		},(status,data,headers)=>resolve({
-			headers,
-			raw:data,
-			data:data?.data,
-			status
-		})));
+		},(status,data,headers)=>{
+			console.log(status,data,headers);
+			resolve({
+				headers,
+				raw:data,
+				data:data?.data,
+				status
+			});
+		}));
 	}
 }

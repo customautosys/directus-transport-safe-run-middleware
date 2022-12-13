@@ -242,7 +242,7 @@ __metadata:
     "@types/express": ^4.17.14
     "@types/node": ^18.11.10
     express: ^4.18.2
-    safe-run-middleware: ^0.0.3
+    run-middleware: ^0.9.10
     typescript: ^4.9.3
   languageName: unknown
   linkType: soft
@@ -272,13 +272,6 @@ __metadata:
   version: 1.8.1
   resolution: "etag@npm:1.8.1"
   checksum: 571aeb3dbe0f2bbd4e4fadbdb44f325fc75335cd5f6f6b6a091e6a06a9f25ed5392f0863c5442acb0646787446e816f13cbfc6edce5b07658541dff573cab1ff
-  languageName: node
-  linkType: hard
-
-"express-list-endpoints@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "express-list-endpoints@npm:4.0.1"
-  checksum: caf51580e2728525dc73ca2239bad0ac6076eada04540db4d34b265048cd9b0177d6655dfbb49b5cd156d4994286a82718665717084d374eef9a724bfd8f3362
   languageName: node
   linkType: hard
 
@@ -596,16 +589,6 @@ __metadata:
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: b99c4b41fdd67a6aaf280fcd05e9ffb0813654894223afb78a31f14a19ad220bba8aba1cb14eddce1fcfb037155fe6de4e861784eb434f7d11ed58d1e70dd491
-  languageName: node
-  linkType: hard
-
-"safe-run-middleware@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "safe-run-middleware@npm:0.0.3"
-  dependencies:
-    express-list-endpoints: ^4.0.1
-    run-middleware: ^0.9.10
-  checksum: 0a4a203cab632529adf5a779ab13493ee680af159aca90a725358672fb53418607d1b99127915b46cdbbe3cfabbb16d00bf1c1290296c5a387f2c5905ecf32c6
   languageName: node
   linkType: hard
 

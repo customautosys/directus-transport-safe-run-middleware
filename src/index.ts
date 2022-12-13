@@ -5,30 +5,15 @@ import{
 	TransportResponse
 }from '@directus/sdk';
 import type {Express} from 'express';
-import safeRunMiddleware from 'safe-run-middleware';
+import runMiddleware from 'run-middleware';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{
-	protected app:{
-		runMiddleware(
-			path:string,
-			payload?:{
-				method?:string,
-				query?:any,
-				body?:any,
-				cookies?:any,
-				headers?:any
-			}
-		):Promise<{
-			statusCode:number,data:any,headers:any
-		}>
-	};
-
-	constructor(url:string,app:Express){
+	constructor(url:string,protected app:Express){
 		super({url});
-		this.app=safeRunMiddleware(app);
+		runMiddleware(app);
 	}
 
-	protected async request<
+	protected request<
 		T=any,
 		R=any
 	>(
@@ -37,17 +22,16 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		data?:Record<string,any>,
 		options?:Omit<TransportOptions,'url'>
 	):Promise<TransportResponse<T,R>>{
-		let response=await this.app.runMiddleware(path,{
+		return new Promise(resolve=>(this.app as any).runMiddleware(this.url+path,{
 			method,
 			query:options.params,
 			body:data,
 			headers:options.headers
-		});
-		return{
-			headers:response.headers,
-			raw:response.data,
-			data:response.data?.data,
-			status:response.statusCode
-		};
+		},(status,data,headers)=>resolve({
+			headers,
+			raw:data,
+			data:data?.data,
+			status
+		})));
 	}
 }

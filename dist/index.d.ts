@@ -1,7 +1,8 @@
 import { Transport, TransportMethods, TransportOptions, TransportResponse } from '@directus/sdk';
-import type { Express } from 'express';
+import type { Request, Response } from 'express';
 export default class DirectusTransportSafeRunMiddleware extends Transport {
-    protected app: Express;
-    constructor(url: string, app: Express);
+    protected req: Request;
+    protected res: Response;
+    constructor(url: string, req: Request, res: Response);
     protected request<T = any, R = any>(method: TransportMethods, path: string, data?: Record<string, any>, options?: Omit<TransportOptions, 'url'>): Promise<TransportResponse<T, R>>;
 }

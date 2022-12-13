@@ -6,10 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sdk_1 = require("@directus/sdk");
 const run_middleware_1 = __importDefault(require("run-middleware"));
 class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
-    constructor(url, app) {
+    constructor(url, req, res) {
         super({ url });
-        this.app = app;
-        (0, run_middleware_1.default)(app);
+        this.req = req;
+        this.res = res;
+        (0, run_middleware_1.default)(req.app);
     }
     request(method, path, data, options) {
         let params = {
@@ -21,13 +22,14 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 'content-type': 'application/json',
                 'transfer-encoding': 'identity'
             },
-            connection: {}
+            connection: {},
+            original_req: this.req
         };
         if (options.params)
             params.query = options.params;
         if (options.headers)
             Object.assign(params.headers, options.headers);
-        return new Promise(resolve => this.app.runMiddleware(this.url + path, params, (status, data, headers) => {
+        return new Promise(resolve => this.req.app.runMiddleware(this.url + path, params, (status, data, headers) => {
             console.log(status, data, headers);
             resolve({
                 headers,

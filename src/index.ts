@@ -4,13 +4,16 @@ import{
 	TransportOptions,
 	TransportResponse
 }from '@directus/sdk';
-import type {Express} from 'express';
+import type{
+	Request,
+	Response
+}from 'express';
 import runMiddleware from 'run-middleware';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{
-	constructor(url:string,protected app:Express){
+	constructor(url:string,protected req:Request,protected res:Response){
 		super({url});
-		runMiddleware(app);
+		runMiddleware(req.app);
 	}
 
 	protected request<
@@ -31,11 +34,12 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 				'content-type':'application/json',
 				'transfer-encoding':'identity'
 			},
-			connection:{}
+			connection:{},
+			original_req:this.req
 		};
 		if(options.params)params.query=options.params;
 		if(options.headers)Object.assign(params.headers,options.headers);
-		return new Promise(resolve=>(this.app as any).runMiddleware(this.url+path,params,(status,data,headers)=>{
+		return new Promise(resolve=>(this.req.app as any).runMiddleware(this.url+path,params,(status,data,headers)=>{
 			console.log(status,data,headers);
 			resolve({
 				headers,

@@ -10,7 +10,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
         super({ url });
         this.req = req;
         this.res = res;
-        (0, run_middleware_1.default)(req.app);
+        (0, run_middleware_1.default)(res.app);
     }
     request(method, path, data, options) {
         let params = {
@@ -30,7 +30,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
             params.query = options.params;
         if (options.headers)
             Object.assign(params.headers, options.headers);
-        return new Promise(resolve => this.req.app.runMiddleware(this.url + path, params, (status, data, headers) => {
+        return new Promise(resolve => this.res.runMiddleware(this.url + path, params, (status, data, headers) => {
             console.log(status, data, headers);
             resolve({
                 headers,

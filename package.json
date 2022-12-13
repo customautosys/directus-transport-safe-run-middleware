@@ -1,6 +1,6 @@
 {
 	"name": "directus-transport-safe-run-middleware",
-	"version": "1.0.9",
+	"version": "1.0.10",
 	"description": "A transport for the Directus JavaScript SDK which uses safe-run-middleware",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

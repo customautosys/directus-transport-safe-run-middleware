@@ -20,7 +20,8 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 origin: '127.0.0.1',
                 'content-type': 'application/json',
                 'transfer-encoding': 'identity'
-            }
+            },
+            connection: {}
         };
         if (options.params)
             params.query = options.params;

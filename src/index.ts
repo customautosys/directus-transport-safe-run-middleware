@@ -25,16 +25,20 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 			let params:any={
 				ip:'127.0.0.1',
 				method,
+				body:'',
 				url:this.url+path,
-				body:data,
 				headers:{
 					remoteAddress:'127.0.0.1',
 					origin:'127.0.0.1',
-					'content-type':'application/json',
+					'content-type':'text/plain',
 					'transfer-encoding':'identity'
 				},
 				connection:{}
 			};
+			if(data){
+				params.body=data;
+				if(typeof data==='object')params.headers['content-type']='application/json';
+			}
 			if(options.params)params.query=options.params;
 			if(options.headers)Object.assign(params.headers,options.headers);
 			Object.assign(req,params);

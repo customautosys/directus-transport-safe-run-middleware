@@ -1,6 +1,6 @@
 {
 	"name": "directus-transport-safe-run-middleware",
-	"version": "1.0.16",
+	"version": "1.0.17",
 	"description": "A transport for the Directus JavaScript SDK which calls the express endpoints on the same server.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",

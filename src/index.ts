@@ -8,12 +8,10 @@ import type{
 	Request,
 	Response
 }from 'express';
-import runMiddleware from 'run-middleware';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{
 	constructor(url:string,protected req:Request,protected res:Response){
 		super({url});
-		runMiddleware(res.app);
 	}
 
 	protected request<

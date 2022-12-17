@@ -242,7 +242,6 @@ __metadata:
     "@types/express": ^4.17.14
     "@types/node": ^18.11.10
     express: ^4.18.2
-    run-middleware: ^0.9.10
     typescript: ^4.9.3
   languageName: unknown
   linkType: soft
@@ -434,13 +433,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:":
-  version: 4.17.21
-  resolution: "lodash@npm:4.17.21"
-  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
-  languageName: node
-  linkType: hard
-
 "media-typer@npm:0.3.0":
   version: 0.3.0
   resolution: "media-typer@npm:0.3.0"
@@ -573,15 +565,6 @@ __metadata:
     iconv-lite: 0.4.24
     unpipe: 1.0.0
   checksum: 5362adff1575d691bb3f75998803a0ffed8c64eabeaa06e54b4ada25a0cd1b2ae7f4f5ec46565d1bec337e08b5ac90c76eaa0758de6f72a633f025d754dec29e
-  languageName: node
-  linkType: hard
-
-"run-middleware@npm:^0.9.10":
-  version: 0.9.10
-  resolution: "run-middleware@npm:0.9.10"
-  dependencies:
-    lodash: ""
-  checksum: cf32f8ecfc78ea3b7021b177d137258d391548d01d0dd757a6e939876c2cf5c1fbb9073f4b25780a084096b5fbd2cc6c213c82eaa5a08653eb0f9ed75d1269f0
   languageName: node
   linkType: hard
 

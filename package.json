@@ -1,7 +1,7 @@
 {
 	"name": "directus-transport-safe-run-middleware",
-	"version": "1.0.15",
-	"description": "A transport for the Directus JavaScript SDK which uses safe-run-middleware",
+	"version": "1.0.16",
+	"description": "A transport for the Directus JavaScript SDK which calls the express endpoints on the same server.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
@@ -29,8 +29,5 @@
 		"express": "^4.18.2",
 		"typescript": "^4.9.3"
 	},
-	"packageManager": "yarn@3.3.0",
-	"dependencies": {
-		"run-middleware": "^0.9.10"
-	}
+	"packageManager": "yarn@3.3.0"
 }

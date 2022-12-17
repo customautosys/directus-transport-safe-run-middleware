@@ -4,13 +4,10 @@ import{
 	TransportOptions,
 	TransportResponse
 }from '@directus/sdk';
-import type{
-	Request,
-	Response
-}from 'express';
+import type {Request} from 'express';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{
-	constructor(url:string,protected req:Request){
+	constructor(url:string,public req:Request){
 		super({url});
 	}
 
@@ -23,12 +20,12 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 		data?:Record<string,any>,
 		options?:Omit<TransportOptions,'url'>
 	):Promise<TransportResponse<T,R>>{
-		return new Promise(resolve=>{
+		return new Promise<TransportResponse<T,R>>((resolve,reject)=>{
 			let req=Object.assign({},this.req);
 			let params:any={
 				ip:'127.0.0.1',
 				method,
-				url:path,
+				url:this.url+path,
 				body:data,
 				headers:{
 					remoteAddress:'127.0.0.1',
@@ -36,8 +33,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 					'content-type':'application/json',
 					'transfer-encoding':'identity'
 				},
-				connection:{},
-				original_req:this.req
+				connection:{}
 			};
 			if(options.params)params.query=options.params;
 			if(options.headers)Object.assign(params.headers,options.headers);
@@ -105,7 +101,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 				resolve(response);
 			}) as any;
 
-			this.req.app(req,res);
+			this.req.app(req,res,reject);
 		});
 	}
 }

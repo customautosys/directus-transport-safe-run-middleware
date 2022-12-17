@@ -7,12 +7,12 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
         this.req = req;
     }
     request(method, path, data, options) {
-        return new Promise(resolve => {
+        return new Promise((resolve, reject) => {
             let req = Object.assign({}, this.req);
             let params = {
                 ip: '127.0.0.1',
                 method,
-                url: path,
+                url: this.url + path,
                 body: data,
                 headers: {
                     remoteAddress: '127.0.0.1',
@@ -20,8 +20,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                     'content-type': 'application/json',
                     'transfer-encoding': 'identity'
                 },
-                connection: {},
-                original_req: this.req
+                connection: {}
             };
             if (options.params)
                 params.query = options.params;
@@ -86,7 +85,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 catch (error) { }
                 resolve(response);
             });
-            this.req.app(req, res);
+            this.req.app(req, res, reject);
         });
     }
 }

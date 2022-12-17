@@ -41,26 +41,6 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 set statusCode(status) {
                     this._statusCode = status;
                     this.status(status);
-                },
-                getHeader: x => { var _a; return (_a = headers[x]) !== null && _a !== void 0 ? _a : null; },
-                setHeader(x, y) {
-                    headers[x] = headers[x.toLowerCase()] = y;
-                    return this;
-                },
-                redirect(code, url) {
-                    if (typeof code !== 'number' || (code > 0 && code < 600)) {
-                        status = typeof url === 'number' ? Math.max(1, Math.min(599, url)) : 301;
-                        url = code;
-                    }
-                    else {
-                        status = code;
-                    }
-                    this.setHeader('Location', url);
-                    this.end();
-                },
-                status(code) {
-                    status = code;
-                    return this;
                 }
             };
             res.set = res.header = ((x, y) => {
@@ -74,6 +54,27 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 }
                 return res;
             });
+            res.setHeader = (x, y) => {
+                headers[x] = y;
+                headers[x.toLowerCase()] = y;
+                return res;
+            };
+            res.getHeader = x => { var _a; return (_a = headers[x]) !== null && _a !== void 0 ? _a : null; };
+            res.redirect = function (code, url) {
+                if (typeof code !== 'number') {
+                    status = 301;
+                    url = code;
+                }
+                else {
+                    status = code;
+                }
+                res.setHeader('Location', url);
+                res.end();
+            };
+            res.status = res.sendStatus = function (code) {
+                status = code;
+                return res;
+            };
             res.end = res.send = res.write = (raw => {
                 let response = {
                     status,

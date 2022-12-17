@@ -42,6 +42,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 			if(options.params)params.query=options.params;
 			if(options.headers)Object.assign(params.headers,options.headers);
 			Object.assign(req,params);
+
 			let headers={};
 			let status=200;
 			let res:any={
@@ -54,27 +55,9 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 				set statusCode(status){
 				  this._statusCode = status
 				  this.status(status)
-				},
-				getHeader:x=>headers[x]??null,
-				setHeader(x,y){
-					headers[x]=headers[x.toLowerCase()]=y;
-					return this;
-				},
-				redirect(code,url){
-					if (typeof code!=='number'||(code>0&&code<600)) {
-						status=typeof url==='number'?Math.max(1,Math.min(599,url)):301;
-						url=code;
-					}else{
-						status=code;
-					}
-					this.setHeader('Location', url);
-					this.end();
-				},
-				status(code){
-					status=code;
-					return this;
 				}
 			};
+
 			res.set=res.header=((x,y)=>{
 				if(x&&typeof x==='object'){
 					for(let key in x){
@@ -85,6 +68,30 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 				}
 				return res;
 			}) as any;
+
+			res.setHeader=(x,y)=>{
+				headers[x] = y;
+				headers[x.toLowerCase()] = y;
+				return res;
+			};
+
+			res.getHeader=x=>headers[x]??null;
+
+			res.redirect=function(code,url){
+				if(typeof code!=='number') {
+					status=301;
+					url=code;
+				}else{
+					status=code;
+				}
+				res.setHeader('Location',url);
+				res.end();
+			};
+
+			res.status=res.sendStatus=function(code){
+				status=code;
+				return res;
+			};
 
 			res.end=res.send=res.write=(raw=>{
 				let response:any={

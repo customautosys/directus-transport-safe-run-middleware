@@ -31,7 +31,38 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
             Object.assign(req, params);
             let headers = {};
             let status = 200;
-            let res = Object.assign({}, this.res);
+            let res = {
+                _removedHeader: {},
+                _statusCode: 200,
+                statusMessage: 'OK',
+                get statusCode() {
+                    return this._statusCode;
+                },
+                set statusCode(status) {
+                    this._statusCode = status;
+                    this.status(status);
+                },
+                getHeader: x => { var _a; return (_a = headers[x]) !== null && _a !== void 0 ? _a : null; },
+                setHeader(x, y) {
+                    headers[x] = headers[x.toLowerCase()] = y;
+                    return this;
+                },
+                redirect(code, url) {
+                    if (typeof code !== 'number' || (code > 0 && code < 600)) {
+                        status = typeof url === 'number' ? Math.max(1, Math.min(599, url)) : 301;
+                        url = code;
+                    }
+                    else {
+                        status = code;
+                    }
+                    this.setHeader('Location', url);
+                    this.end();
+                },
+                status(code) {
+                    status = code;
+                    return this;
+                }
+            };
             res.set = res.header = ((x, y) => {
                 if (x && typeof x === 'object') {
                     for (let key in x) {
@@ -43,26 +74,6 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 }
                 return res;
             });
-            res.setHeader = (x, y) => {
-                headers[x] = headers[x.toLowerCase()] = y;
-                return res;
-            };
-            res.getHeader = x => { var _a; return (_a = headers[x]) !== null && _a !== void 0 ? _a : null; };
-            res.redirect = ((code, url) => {
-                if (typeof code !== 'number' || (code > 0 && code < 600)) {
-                    status = typeof url === 'number' ? Math.max(1, Math.min(599, url)) : 301;
-                    url = code;
-                }
-                else {
-                    status = code;
-                }
-                res.setHeader("Location", url);
-                res.end();
-            });
-            res.status = number => {
-                status = number;
-                return res;
-            };
             res.end = res.send = res.write = (raw => {
                 let response = {
                     status,

@@ -89,6 +89,8 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 				}catch(error){}
 				resolve(response);
 			}) as any;
+
+			this.req.app(req,res);
 		});
 	}
 }

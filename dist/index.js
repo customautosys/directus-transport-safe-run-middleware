@@ -75,6 +75,7 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 catch (error) { }
                 resolve(response);
             });
+            this.req.app(req, res);
         });
     }
 }

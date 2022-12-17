@@ -22,11 +22,13 @@ npm i -S directus-transport-safe-run-middleware
 ```typescript
 import {Directus} from '@directus/sdk';
 import {createApp} from 'directus';
-import express from 'express';
+import express,{Request} from 'express';
 import DirectusTransportSafeRunMiddleware from 'directus-transport-safe-run-middleware';
 
 let app=express();
 app.use('/directus',await createApp());
 
-let directus=new Directus('/directus',{transport:new DirectusTransportSafeRunMiddleware()})
+let req:Request;
+
+let directus=new Directus('/directus',{transport:new DirectusTransportSafeRunMiddleware('/directus',req)});
 ```

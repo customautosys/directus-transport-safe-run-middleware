@@ -10,7 +10,7 @@ import type{
 }from 'express';
 
 export default class DirectusTransportSafeRunMiddleware extends Transport{
-	constructor(url:string,protected req:Request,protected res:Response){
+	constructor(url:string,protected req:Request){
 		super({url});
 	}
 

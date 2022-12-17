@@ -2,10 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const sdk_1 = require("@directus/sdk");
 class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
-    constructor(url, req, res) {
+    constructor(url, req) {
         super({ url });
         this.req = req;
-        this.res = res;
     }
     request(method, path, data, options) {
         return new Promise(resolve => {

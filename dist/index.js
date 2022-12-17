@@ -79,13 +79,14 @@ class DirectusTransportSafeRunMiddleware extends sdk_1.Transport {
                 return res;
             };
             res.end = res.send = res.write = (raw => {
+                var _a;
                 let response = {
                     status,
                     headers,
                     raw
                 };
                 try {
-                    response.data = JSON.parse(raw);
+                    response.data = (_a = JSON.parse(raw)) === null || _a === void 0 ? void 0 : _a.data;
                 }
                 catch (error) { }
                 resolve(response);

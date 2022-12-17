@@ -100,7 +100,7 @@ export default class DirectusTransportSafeRunMiddleware extends Transport{
 					raw
 				};
 				try{
-					response.data=JSON.parse(raw);
+					response.data=JSON.parse(raw)?.data;
 				}catch(error){}
 				resolve(response);
 			}) as any;
